@@ -1,13 +1,16 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { hashPassword, decryptPassword } from 'src/common/utils/password.util';
 import { sendSuccess } from 'src/common/utils/response.util';
 import { UsersService } from 'src/users/users.service';
-import { RegisterUserDto, LoginUserDto } from './dtos/auth.dto';
+import { RegisterUserDto, LoginUserDto } from './auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { EnvConfig } from 'src/config/env.config';
 
 @Injectable()
 export class AuthService {
@@ -44,6 +47,40 @@ export class AuthService {
       throw new BadRequestException('Invalid credentials');
     }
 
-    return sendSuccess(user, 'Login successfully');
+    return sendSuccess(
+      {
+        user,
+        token: await this.generateAuthToken({
+          userId: user.id,
+        }),
+      },
+      'Login successfully',
+    );
+  }
+
+  async generateAuthToken(payload: object) {
+    try {
+      const token = await this.jwtService.signAsync(payload, {
+        secret: EnvConfig.jwt.secret,
+        expiresIn: EnvConfig.jwt.expiry,
+      });
+      return token;
+    } catch (error) {
+      throw new InternalServerErrorException('jwt sign error', error);
+    }
+  }
+
+  async validateAuthToken(token: string) {
+    try {
+      const tokenData: { userId: string } = await this.jwtService.verifyAsync(
+        token,
+        {
+          secret: EnvConfig.jwt.secret,
+        },
+      );
+      return tokenData;
+    } catch (error) {
+      throw new UnauthorizedException(error);
+    }
   }
 }
