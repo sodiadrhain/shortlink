@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ShortLinksModule } from './short-links/short-links.module';
 import { AuthModule } from './auth/auth.module';
+import { DatabaseConfig } from './config/database.config';
 
 @Module({
-  imports: [UsersModule, ShortLinksModule, AuthModule],
+  imports: [DatabaseConfig, UsersModule, ShortLinksModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

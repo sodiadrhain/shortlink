@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Users } from './users.entity';
 import { IUser } from './users.interface';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UsersRepository {
@@ -13,6 +14,7 @@ export class UsersRepository {
 
   async create(user: IUser): Promise<Users> {
     try {
+      user.apiKey = randomUUID();
       return await this.usersRepository.save(user);
     } catch (error) {
       throw new InternalServerErrorException('Create user error', error);

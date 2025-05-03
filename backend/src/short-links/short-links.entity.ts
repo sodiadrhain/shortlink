@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  BaseEntity,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm';
 import { IShortLink } from './short-links.interface';
 
 @Entity()
@@ -13,7 +6,7 @@ export class ShortLinks extends BaseEntity implements IShortLink {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'user_id' })
+  @Column({ name: 'user_id', type: 'uuid' })
   userId: string;
 
   @Column({ name: 'full_link' })
@@ -28,13 +21,15 @@ export class ShortLinks extends BaseEntity implements IShortLink {
   @Column({ default: true })
   status: boolean;
 
-  @CreateDateColumn({
+  @Column({
+    type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(0)',
     name: 'created_at',
   })
   createdAt: Date;
 
-  @UpdateDateColumn({
+  @Column({
+    type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(0)',
     onUpdate: 'CURRENT_TIMESTAMP',
     name: 'updated_at',

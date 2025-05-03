@@ -10,5 +10,5 @@ export class EncodeLinkDto {
 export class DecodeLinkDto {
   @IsNotEmpty({ message: 'Short link code must not be empty' })
   @IsString({ message: 'Short link code must be string' })
-  short_link_code: string;
+  shortLinkCode: string;
 }

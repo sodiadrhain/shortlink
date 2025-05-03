@@ -26,7 +26,7 @@ export class ShortLinksService {
 
   async decodeLink(userId: string, decodeLinkData: DecodeLinkDto) {
     const link = await this.shortLinksRepo.findOne({
-      shortLinkCode: decodeLinkData.short_link_code,
+      shortLinkCode: decodeLinkData.shortLinkCode,
       userId,
     });
     if (!link) {
@@ -56,6 +56,12 @@ export class ShortLinksService {
   }
 
   async getLinks(userId: string) {
+    const linksList = await this.shortLinksRepo.findAll({ userId });
+    return sendSuccess(linksList, 'Links fetched successfully');
+  }
+
+  async search(userId: string, query: string) {
+    return { userId, query };
     const linksList = await this.shortLinksRepo.findAll({ userId });
     return sendSuccess(linksList, 'Links fetched successfully');
   }

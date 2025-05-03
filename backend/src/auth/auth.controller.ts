@@ -1,36 +1,24 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { LoginUserDto, RegisterUserDto } from './auth.dto';
 
 @Controller('auth')
 export class AuthController {
-  login() {
-    return 'login';
+  constructor(private readonly authService: AuthService) {}
+
+  @Post('/login')
+  @HttpCode(HttpStatus.OK)
+  login(@Body() loginUserDto: LoginUserDto) {
+    return this.authService.loginUser(loginUserDto);
   }
 
-  register() {
-    return 'register';
+  @Post('/register')
+  @HttpCode(HttpStatus.CREATED)
+  register(@Body() registerUserDto: RegisterUserDto) {
+    return this.authService.registerUser(registerUserDto);
   }
 
   resfresh() {
     return 'refresh-token';
-  }
-
-  encode() {
-    return '/api/encode - Encodes a URL to a shortened URL';
-  }
-
-  decode() {
-    return '/api/decode - Decodes a shortened URL to its original URL';
-  }
-
-  statistic() {
-    return '/api/statistic/{url_path} - Return basic stat of a short URL path. Using the above link';
-  }
-
-  list() {
-    return '/api/list - List all available url';
-  }
-
-  path() {
-    return '/{url_path} - This should redirect the user to the long url.';
   }
 }

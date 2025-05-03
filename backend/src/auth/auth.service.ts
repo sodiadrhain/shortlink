@@ -27,13 +27,19 @@ export class AuthService {
       throw new BadRequestException('User already exists');
     }
 
-    const newUser = this.userService.createUser({
+    const newUser = await this.userService.createUser({
       name: createUserData.name,
       email: createUserData.email,
       password: await hashPassword(createUserData.password),
     });
 
-    return sendSuccess(newUser, 'Registration successfully');
+    return sendSuccess(
+      {
+        email: newUser.email,
+        name: newUser.name,
+      },
+      'Registration successfully',
+    );
   }
 
   async loginUser(loginUserData: LoginUserDto) {
@@ -49,7 +55,10 @@ export class AuthService {
 
     return sendSuccess(
       {
-        user,
+        user: {
+          email: user.email,
+          id: user.id,
+        },
         token: await this.generateAuthToken({
           userId: user.id,
         }),
@@ -80,7 +89,7 @@ export class AuthService {
       );
       return tokenData;
     } catch (error) {
-      throw new UnauthorizedException(error);
+      throw new UnauthorizedException('Unauthorized access', error);
     }
   }
 }
