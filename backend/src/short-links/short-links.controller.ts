@@ -12,7 +12,7 @@ import {
 import { DecodeLinkDto, EncodeLinkDto } from './short-links.dto';
 import { ShortLinksService } from './short-links.service';
 
-@Controller()
+@Controller('api')
 export class ShortLinksController {
   constructor(private readonly shortLinksService: ShortLinksService) {}
 

@@ -60,9 +60,7 @@ export class ShortLinksService {
     return sendSuccess(linksList, 'Links fetched successfully');
   }
 
-  async search(userId: string, query: string) {
+  search(userId: string, query: string) {
     return { userId, query };
-    const linksList = await this.shortLinksRepo.findAll({ userId });
-    return sendSuccess(linksList, 'Links fetched successfully');
   }
 }
