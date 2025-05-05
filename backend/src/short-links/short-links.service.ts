@@ -55,12 +55,11 @@ export class ShortLinksService {
     );
   }
 
-  async getLinks(userId: string) {
-    const linksList = await this.shortLinksRepo.findAll({ userId });
+  async getLinks(userId: string, params: object) {
+    const linksList = await this.shortLinksRepo.findAllAndPaginate(
+      { userId },
+      params,
+    );
     return sendSuccess(linksList, 'Links fetched successfully');
-  }
-
-  search(userId: string, query: string) {
-    return { userId, query };
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  DefaultValuePipe,
   Get,
   HttpCode,
   HttpStatus,
@@ -36,13 +37,11 @@ export class ShortLinksController {
 
   @Get('/list')
   @HttpCode(HttpStatus.OK)
-  list(@Req() req: Request) {
-    return this.shortLinksService.getLinks(req['userId']);
-  }
-
-  @Get('/search')
-  @HttpCode(HttpStatus.OK)
-  search(@Req() req: Request, @Query('q') query: string) {
-    return this.shortLinksService.search(req['userId'], query);
+  list(
+    @Req() req: Request,
+    @Query('page', new DefaultValuePipe(1)) page: number,
+    @Query('q') q: string,
+  ) {
+    return this.shortLinksService.getLinks(req['userId'], { page, q });
   }
 }
