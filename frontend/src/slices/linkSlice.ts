@@ -1,32 +1,31 @@
 import { apiSlice } from "./apiSlice"
-const BASE_URL = "/api"
 
 export const linkApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     list: builder.mutation({
       query: (data) => ({
-        url: `${BASE_URL}/list`,
+        url: '/list',
         method: "GET",
         params: { ...data, page: data.page, q: data.q },
       }),
     }),
     encode: builder.mutation({
       query: (data) => ({
-        url: `${BASE_URL}/encode`,
+        url: '/encode',
         method: "POST",
         body: data,
       }),
     }),
     decode: builder.mutation({
       query: (data) => ({
-        url: `${BASE_URL}/decode`,
+        url: '/decode',
         method: "POST",
         body: data,
       }),
     }),
     statistic: builder.mutation({
       query: (data) => ({
-        url: `${BASE_URL}/statistic/${data._id}`,
+        url: `/statistic/${data._id}`,
         method: "GET",
       }),
     }),

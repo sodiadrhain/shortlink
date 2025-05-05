@@ -6,7 +6,7 @@ export const EnvConfig = {
   app: {
     name: 'shortlink-backend',
     env: process.env.NODE_ENV,
-    port: process.env.PORT ?? 3000,
+    port: process.env.PORT ?? 9000,
   },
   database: {
     host: process.env.DATABASE_HOST,
