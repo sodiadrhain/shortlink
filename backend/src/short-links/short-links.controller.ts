@@ -25,8 +25,8 @@ export class ShortLinksController {
 
   @Post('/decode')
   @HttpCode(HttpStatus.OK)
-  decode(@Req() req: Request, @Body() decodeLinkDto: DecodeLinkDto) {
-    return this.shortLinksService.decodeLink(req['userId'], decodeLinkDto);
+  decode(@Body() decodeLinkDto: DecodeLinkDto) {
+    return this.shortLinksService.decodeLink(decodeLinkDto);
   }
 
   @Get('/statistic/:urlPath')

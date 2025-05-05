@@ -23,7 +23,7 @@ export class AuthInterceptor implements NestInterceptor {
   ): Promise<Observable<any>> {
     const request: Request = context.switchToHttp().getRequest();
 
-    if (request.url.includes('auth')) {
+    if (request.url.includes('auth') || request.url.includes('decode')) {
       return next.handle();
     }
 

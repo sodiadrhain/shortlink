@@ -14,11 +14,16 @@ const LinkSearch = () => {
         return;
       }
 
-    const searchValue = e.target.value
-
-    try { 
-       const res = await fetchLinks({ q: searchValue }).unwrap()
-       dispatch(setLinkData({ ...res }));
+    try {
+        let q
+        if ((e.target.value ?? '').length > 3) {
+            q = e.target.value
+        } else {
+            q = ''
+        }
+        const res = await fetchLinks({ q }).unwrap()
+        localStorage.setItem('isSearch', 'true')
+        dispatch(setLinkData({ ...res }));
      } catch (err: any) {
        toast.error(err?.data?.message ?? err.error)
      }
@@ -26,7 +31,7 @@ const LinkSearch = () => {
 
   return (
       <form className="form">
-      <input type="text" id="search" placeholder="Search for links..." onChange={onChange} required/>
+      <input type="text" id="search" placeholder="Search with full url..." onChange={onChange} required/>
     </form>
 )
 }

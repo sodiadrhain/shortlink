@@ -24,10 +24,9 @@ export class ShortLinksService {
     return sendSuccess(link, 'Link shortened successfully');
   }
 
-  async decodeLink(userId: string, decodeLinkData: DecodeLinkDto) {
+  async decodeLink(decodeLinkData: DecodeLinkDto) {
     const link = await this.shortLinksRepo.findOne({
       shortLinkCode: decodeLinkData.shortLinkCode,
-      userId,
     });
     if (!link) {
       throw new NotFoundException('Link not found');

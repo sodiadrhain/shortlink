@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import { useDispatch, useSelector } from "react-redux";
 import { useListMutation } from "../../slices/linkSlice";
 import { setLinkData } from "../../slices/authenticated";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../layout/loader/Loader";
 import LinkSearch from "./LinkSearch";
 import { FiCopy } from "react-icons/fi";
@@ -15,18 +14,21 @@ const LinkList = () => {
   const dispatch = useDispatch();
   const domain = window.location.origin;
 
+  const [currentPage, setCurrentPage] = useState(1);
+
   const loadLinks = async (page = 1) => {
     try {
       const links = await fetchLinks({ page }).unwrap();
       dispatch(setLinkData({ ...links }));
+      localStorage.setItem("isSearch", "");
     } catch (error) {
       console.error("Failed to fetch links:", error);
     }
   };
 
   useEffect(() => {
-    loadLinks();
-  }, [fetchLinks]);
+    loadLinks(currentPage);
+  }, [fetchLinks, currentPage]);
 
   const handleCopy = async (text: string) => {
     try {
@@ -38,11 +40,27 @@ const LinkList = () => {
     }
   };
 
+  const totalPages = linkData.pagination.total;
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
   return (
     <>
       {isLoadingLinks ? (
         <Loader />
-      ) : linkData.data.length === 0 ? (
+      ) : linkData.data.length === 0 && localStorage.getItem("isSearch") ? (
+        <>
+          <LinkSearch />
+          <div style={{ textAlign: "center" }}>
+            <br />
+            <br /> No results found
+          </div>
+        </>
+      ) : linkData.data.length === 0 && !localStorage.getItem("isSearch") ? (
         ""
       ) : (
         <>
@@ -50,8 +68,8 @@ const LinkList = () => {
           <table>
             <thead>
               <tr>
-                <th>Full Link</th>
                 <th>Short Link</th>
+                <th>Original Link</th>
                 <th>Stats</th>
                 <th>Created At</th>
               </tr>
@@ -61,9 +79,8 @@ const LinkList = () => {
                 const shortUrl = `${domain}/${link.shortLinkCode}`;
                 return (
                   <tr key={link.id}>
-                    <td data-label="fullLink">{link.fullLink}</td>
                     <td data-label="shortLinkCode">
-                      <span>{shortUrl}</span>
+                    <span>{shortUrl}</span>
                       <button
                         onClick={() => handleCopy(shortUrl)}
                         style={{
@@ -77,6 +94,9 @@ const LinkList = () => {
                         <FiCopy />
                       </button>
                     </td>
+                    <td data-label="fullLink">
+                     {link.fullLink}
+                    </td>
                     <td data-label="stats">{link.stats}</td>
                     <td data-label="createdAt">
                       {new Date(link.createdAt).toLocaleString()}
@@ -86,6 +106,19 @@ const LinkList = () => {
               })}
             </tbody>
           </table>
+
+          {/* Pagination */}
+          <div style={{ marginTop: "20px", textAlign: "center" }}>
+            <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1} style={{cursor: 'pointer'}}>
+              Prev
+            </button>
+            <span style={{ margin: "0 10px" }}>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages} style={{cursor: 'pointer'}}>
+              Next
+            </button>
+          </div>
         </>
       )}
     </>

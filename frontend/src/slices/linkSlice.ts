@@ -7,7 +7,7 @@ export const linkApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: `${BASE_URL}/list`,
         method: "GET",
-        params: { ...data, limit: 100 },
+        params: { ...data, page: data.page, q: data.q },
       }),
     }),
     encode: builder.mutation({

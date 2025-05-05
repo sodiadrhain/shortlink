@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const userInfo: string = localStorage.getItem("userInfo") as string;
 const initialState = {
   userInfo: userInfo ? JSON.parse(userInfo) : null,
-  linkData: { data: [] },
+  linkData: { data: [], pagination: { current: 1, previous: null, next: null, total: 1 } },
 }
 
 const authSlice = createSlice({
@@ -25,7 +25,7 @@ const authSlice = createSlice({
     },
     setLinkData: (state, action) => {
       const linkData = action?.payload?.data
-      state.linkData.data = linkData;
+      state.linkData = linkData;
     },
   },
 })
