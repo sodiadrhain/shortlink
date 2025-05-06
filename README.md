@@ -10,7 +10,7 @@ It includes the following:
 - [Backend API](./backend/) with Nestjs, TypeORM & MySQL
 - Routes for auth, encode and decode urls
 - JWT for authentication
-- [React frontend](./frontend/) with login, register, create short links, list short links and pagination
+- [React frontend](./frontend/) with login, register, create short links, list short links search links and pagination
 - Redux for state management
 - Vanilla Bootstrap for UI/CSS
 - React Toastify for notifications
