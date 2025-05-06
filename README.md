@@ -242,6 +242,9 @@ then:
 npm run test
 ```
 
-to see the test results.
+to see the test results
 
+N/B test file is here: [./backend/src/short-links/short-links.test.spec.ts](/backend/src/short-links/short-links.test.spec.ts)
+
+The test covers for testing the apis
 ____________________________________________________________________________________________________________________________________________________________________
