@@ -5,12 +5,12 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { hashPassword, decryptPassword } from 'src/common/utils/password.util';
-import { sendSuccess } from 'src/common/utils/response.util';
-import { UsersService } from 'src/users/users.service';
+import { hashPassword, decryptPassword } from '../common/utils/password.util';
+import { sendSuccess } from '../common/utils/response.util';
+import { UsersService } from '../users/users.service';
 import { RegisterUserDto, LoginUserDto } from './auth.dto';
 import { JwtService } from '@nestjs/jwt';
-import { EnvConfig } from 'src/config/env.config';
+import { EnvConfig } from '../config/env.config';
 
 @Injectable()
 export class AuthService {

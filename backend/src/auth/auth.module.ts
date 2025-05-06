@@ -4,7 +4,7 @@ import { AuthController } from './auth.controller';
 import { AuthInterceptor } from './auth.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { JwtModule } from '@nestjs/jwt';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   providers: [

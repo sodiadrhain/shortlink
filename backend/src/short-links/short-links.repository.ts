@@ -8,8 +8,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { ShortLinks } from './short-links.entity';
 import { IShortLink } from './short-links.interface';
-import { PaginationService } from 'src/pagination/pagination.service';
-import { IPagination } from 'src/pagination/pagination.interface';
+import { PaginationService } from '../pagination/pagination.service';
+import { IPagination } from '../pagination/pagination.interface';
 
 @Injectable()
 export class ShortLinksRepository {

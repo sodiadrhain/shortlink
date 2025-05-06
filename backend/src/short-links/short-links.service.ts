@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DecodeLinkDto, EncodeLinkDto } from './short-links.dto';
 import { ShortLinksRepository } from './short-links.repository';
-import { sendSuccess } from 'src/common/utils/response.util';
-import { getRandomString } from 'src/common/utils/random.util';
+import { sendSuccess } from '../common/utils/response.util';
+import { getRandomString } from '../common/utils/random.util';
 
 @Injectable()
 export class ShortLinksService {

@@ -1,7 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvConfig } from './env.config';
-import { Users } from 'src/users/users.entity';
-import { ShortLinks } from 'src/short-links/short-links.entity';
+import { Users } from '../users/users.entity';
+import { ShortLinks } from '../short-links/short-links.entity';
 
 export const DatabaseConfig = TypeOrmModule.forRoot({
   type: 'mysql',

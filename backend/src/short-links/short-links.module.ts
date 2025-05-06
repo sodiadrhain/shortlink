@@ -4,7 +4,7 @@ import { ShortLinksService } from './short-links.service';
 import { ShortLinks } from './short-links.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShortLinksRepository } from './short-links.repository';
-import { PaginationModule } from 'src/pagination/pagination.module';
+import { PaginationModule } from '../pagination/pagination.module';
 
 @Module({
   controllers: [ShortLinksController],

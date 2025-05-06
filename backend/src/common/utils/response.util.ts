@@ -1,5 +1,5 @@
 export const sendSuccess = (
-  data: object | Array<object> | null = null,
+  data: any = null,
   message: string = 'Data fetched successfully',
 ) => {
   return {
