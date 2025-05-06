@@ -230,6 +230,12 @@ Ensure you update the necessary configurations in the `.env` file, particularly 
 
 Make sure DB is connected
 
+Change directory to backend (if not there)
+
+```sh
+cd backend
+```
+
 Run (to install any dependancies and packages)
 
 ```sh
